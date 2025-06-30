@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    # DB connection settings
+    # TODO - add password later
+    url: jdbc:postgresql://localhost:5432/transcript_db
+    username: joffredupreez
+    password: joffre$$
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update   # Can be 'create', 'update', 'validate', or 'none'
+    show-sql: true        # Logs SQL queries to console
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+# Optional server port
+server:
+  port: 8080
