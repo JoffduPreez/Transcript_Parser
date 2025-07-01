@@ -43,4 +43,12 @@ public class AppUser {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getPassword() {
+        return passwordHash;
+    }
+
+    public void setPassword(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
 }

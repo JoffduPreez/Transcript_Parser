@@ -13,6 +13,9 @@ spring:
     show-sql: true        # Logs SQL queries to console
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+jwt:
+  secret: Kss851y//zyue5xGLJPurU7/88wcuscLVCwZ2sdTZBINLpqE3AEVfq0xlwpPp5T+
+
 # Optional server port
 server:
   port: 8080

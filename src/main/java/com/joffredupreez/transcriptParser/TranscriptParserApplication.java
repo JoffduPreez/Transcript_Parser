@@ -1,7 +1,7 @@
 package com.joffredupreez.transcriptParser;
 
 import com.joffredupreez.transcriptParser.model.AppUser;
-import com.joffredupreez.transcriptParser.repositiory.UserRepository;
+import com.joffredupreez.transcriptParser.repositiory.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class TranscriptParserApplication implements CommandLineRunner {
 
     @Autowired
-    private UserRepository userRepository;
+    private AppUserRepository userRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(TranscriptParserApplication.class, args);
