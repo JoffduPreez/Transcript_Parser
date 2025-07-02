@@ -22,35 +22,29 @@ public class SecurityConfig {
     @Autowired private JwtFilter jwtFilter;
     @Autowired private CustomUserDetailsService userDetailsService;
 
-    /*
-    Disables CSRF protection. This is okay in stateless APIs where you're not using cookies or forms
-    Allowing open access to /auth/** (e.g., login/register), and requiring authentication for everything else.
-    Sets the app to stateless. You're telling Spring not to create sessions — instead, each request must contain a valid JWT.
-    Injects your custom JWT filter into the filter chain, before Spring's built-in username/password filter.
-    This filter will extract the token, validate it, and set the authenticated user.
-     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        // Disable  CSRF protection. This is okay in stateless APIs where you're not using cookies or forms
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                        // Allow open access to /auth/** (e.g., login/register), and require authentication for everything else.
                         .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated()
+                        // Sets the app to stateless. You're telling Spring not to create sessions — instead, each request must contain a valid JWT.
                 ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
+        // Injects your custom JWT filter into the filter chain, before Spring's built-in username/password filter.
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
-    /*
-    Provides a configured AuthenticationManager as a Spring Bean so that your login controller or auth filter can use it to authenticate users.
-
-    Retrieves the builder used to configure authentication rules.
-    Tells Spring how to load a user by username — it’ll use CustomUserDetailsService.
-    Ensures password comparisons use your defined encoder (usually BCrypt).
-     */
+    // Provide a configured AuthenticationManager as a Spring Bean so that your login controller or auth filter can use it to authenticate users.
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+        // Retrieve the builder used to configure authentication rules.
         AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        // Tell Spring how to load a user by username — it’ll use CustomUserDetailsService.
+        // Ensure password comparisons use my defined encoder (usually BCrypt).
         builder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
         return builder.build();
     }
