@@ -2,6 +2,9 @@ package com.joffredupreez.transcriptParser.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class AppUser {
 
@@ -14,6 +17,9 @@ public class AppUser {
     private String email;
 
     private String passwordHash;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FileResult> fileResults = new ArrayList<>();
 
     // Constructors
     public AppUser() {}
