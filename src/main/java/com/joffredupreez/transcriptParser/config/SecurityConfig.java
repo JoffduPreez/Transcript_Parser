@@ -1,6 +1,6 @@
 package com.joffredupreez.transcriptParser.config;
 
-import com.joffredupreez.transcriptParser.service.CustomUserDetailsService;
+import com.joffredupreez.transcriptParser.service.JPAUserDetailsService;
 import com.joffredupreez.transcriptParser.service.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     @Autowired private JwtFilter jwtFilter;
-    @Autowired private CustomUserDetailsService userDetailsService;
+    @Autowired private JPAUserDetailsService userDetailsService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

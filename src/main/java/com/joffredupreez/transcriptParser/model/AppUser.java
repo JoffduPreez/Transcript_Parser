@@ -1,7 +1,7 @@
 package com.joffredupreez.transcriptParser.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,13 +16,15 @@ public class AppUser {
 
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String passwordHash;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FileResult> fileResults = new ArrayList<>();
 
-    // Constructors
-    public AppUser() {}
+    public AppUser() {
+        // required by JPA
+    }
 
     public AppUser(String username, String email) {
         this.username = username;
