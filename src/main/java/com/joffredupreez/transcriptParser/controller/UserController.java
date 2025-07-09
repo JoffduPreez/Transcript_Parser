@@ -6,15 +6,25 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/profile")
     public ResponseEntity<?> getUserProfile(@AuthenticationPrincipal AppUser user) {
-        logger.info("user: " + user.getUsername());
-        // user is already the logged-in AppUser entity
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(new ProfileResponse(user.getUsername(), user.getEmail()));
+    }
+
+    public static class ProfileResponse {
+        public String username;
+        public String email;
+
+        public ProfileResponse(String username, String email) {
+            this.username = username;
+            this.email = email;
+        }
     }
 }

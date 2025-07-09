@@ -1,12 +1,16 @@
 package com.joffredupreez.transcriptParser.service;
 
+import com.joffredupreez.transcriptParser.controller.UserController;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -20,6 +24,7 @@ public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtil jwtUtil;
     @Autowired private JPAUserDetailsService userDetailsService;
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -48,6 +53,8 @@ public class JwtFilter extends OncePerRequestFilter {
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 // Set the user into Spring’s SecurityContextHolder, which marks the request as authenticated.
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+            } else {
+                logger.info("JWT validation failed");
             }
         }
 

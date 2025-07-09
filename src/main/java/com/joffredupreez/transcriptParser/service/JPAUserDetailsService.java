@@ -18,17 +18,8 @@ public class JPAUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AppUser user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        /*
-        Here, we return the user data as a Spring Security UserDetails object
-        Spring Security uses this UserDetails object to compare the
-        password the user typed with the password stored in the database (via the PasswordEncoder).
-        */
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
-                new ArrayList<>() // list of roles/authorities (empty for now)
-        );
+        return user;
     }
 }

@@ -45,11 +45,10 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request) {
         try {
-            Authentication authentication = authManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.username, request.password)
+            authManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.username, request.password)
             );
-            // Set the currently authenticated user into the Spring Security context
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+
         } catch (org.springframework.security.core.AuthenticationException e) {
             // Authentication failed, handle the exception (e.g., return an error message)
             throw new RuntimeException("Authentication failed: " + e.getMessage());
