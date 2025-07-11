@@ -22,4 +22,5 @@ server:
 
 logging:
   level:
-    root: DEBUG
+    root: INFO
+#    root: DEBUG
