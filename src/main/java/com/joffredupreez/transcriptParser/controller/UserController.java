@@ -1,7 +1,7 @@
 package com.joffredupreez.transcriptParser.controller;
 
 import com.joffredupreez.transcriptParser.model.AppUser;
-import com.joffredupreez.transcriptParser.repositiory.AppUserRepository;
+import com.joffredupreez.transcriptParser.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +12,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
-    @Autowired
-    private AppUserRepository userRepo;
+    @Autowired private UserService userService;
 
     @GetMapping("/profile")
     public ResponseEntity<?> getUserProfile(@AuthenticationPrincipal AppUser user) {
@@ -27,8 +24,12 @@ public class UserController {
     public ResponseEntity<?> updateUserProfile(@AuthenticationPrincipal AppUser user, @RequestBody UpdateProfileRequest updateRequest) {
         user.setUsername(updateRequest.username);
         user.setEmail(updateRequest.email);
-        userRepo.save(user);
-        return ResponseEntity.ok(new ProfileResponse(user.getUsername(), user.getEmail()));
+
+        if (userService.save(user) != null) {
+            return ResponseEntity.ok(new ProfileResponse(user.getUsername(), user.getEmail()));
+        } else {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     public static class ProfileResponse {

@@ -1,15 +1,13 @@
 package com.joffredupreez.transcriptParser.controller;
 
 import com.joffredupreez.transcriptParser.model.AppUser;
-import com.joffredupreez.transcriptParser.repositiory.AppUserRepository;
 import com.joffredupreez.transcriptParser.service.JPAUserDetailsService;
 import com.joffredupreez.transcriptParser.service.JwtUtil;
+import com.joffredupreez.transcriptParser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +25,8 @@ public class AuthController {
     @Autowired private JPAUserDetailsService userDetailsService;
     @Autowired private JwtUtil jwtUtil;
     @Autowired private PasswordEncoder encoder;
-    @Autowired private AppUserRepository userRepo;
+    @Autowired private UserService userService;
+
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     /*
@@ -38,8 +37,12 @@ public class AuthController {
     public ResponseEntity<?> register(@RequestBody AppUser user) {
         // Hash the password before saving
         user.setPassword(encoder.encode(user.getPassword()));
-        userRepo.save(user);
-        return ResponseEntity.ok("User registered");
+
+        if (userService.save(user) != null) {
+            return ResponseEntity.ok("User registered");
+        } else {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @PostMapping("/login")

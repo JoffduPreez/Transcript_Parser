@@ -2,7 +2,6 @@ package com.joffredupreez.transcriptParser.service;
 
 import com.joffredupreez.transcriptParser.model.AppUser;
 import com.joffredupreez.transcriptParser.model.FileResult;
-import com.joffredupreez.transcriptParser.repositiory.AppUserRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +23,7 @@ public class FileStorageService {
     private String uploadDir;
 
     @Autowired
-    private AppUserRepository userService;
+    private UserService userService;
 
     @Autowired
     private FileResultService fileResultService;
