@@ -60,9 +60,145 @@ public class FileResult {
     Later, you can check status:
     GET /python-service/jobs/transcribe-12345
     Response: { "status": "completed", "transcript": "..." }
-     */
+    */
     private String transcriptionJobId;
     private String summarizationJobId; 
     private String taskExtractionJobId;
-    
+
+    public AppUser getUser() {
+        return user;
+    }
+
+    public void setUser(AppUser user) {
+        this.user = user;
+    }
+
+    public String getOriginalFilename() {
+        return originalFilename;
+    }
+
+    public void setOriginalFilename(String originalFilename) {
+        this.originalFilename = originalFilename;
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
+    public Long getFileSizeBytes() {
+        return fileSizeBytes;
+    }
+
+    public void setFileSizeBytes(Long fileSizeBytes) {
+        this.fileSizeBytes = fileSizeBytes;
+    }
+
+    public String getStoredFilePath() {
+        return storedFilePath;
+    }
+
+    public void setStoredFilePath(String storedFilePath) {
+        this.storedFilePath = storedFilePath;
+    }
+
+    public LocalDateTime getUploadedAt() {
+        return uploadedAt;
+    }
+
+    public void setUploadedAt(LocalDateTime uploadedAt) {
+        this.uploadedAt = uploadedAt;
+    }
+
+    public ProcessingStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ProcessingStatus status) {
+        this.status = status;
+    }
+
+    public String getTranscript() {
+        return transcript;
+    }
+
+    public void setTranscript(String transcript) {
+        this.transcript = transcript;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public List<String> getActionItems() {
+        return actionItems;
+    }
+
+    public void setActionItems(List<String> actionItems) {
+        this.actionItems = actionItems;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    public LocalDateTime getLastProcessedAt() {
+        return lastProcessedAt;
+    }
+
+    public void setLastProcessedAt(LocalDateTime lastProcessedAt) {
+        this.lastProcessedAt = lastProcessedAt;
+    }
+
+    public LocalDateTime getCompletedAt() {
+        return completedAt;
+    }
+
+    public void setCompletedAt(LocalDateTime completedAt) {
+        this.completedAt = completedAt;
+    }
+
+    public String getTranscriptionJobId() {
+        return transcriptionJobId;
+    }
+
+    public void setTranscriptionJobId(String transcriptionJobId) {
+        this.transcriptionJobId = transcriptionJobId;
+    }
+
+    public String getSummarizationJobId() {
+        return summarizationJobId;
+    }
+
+    public void setSummarizationJobId(String summarizationJobId) {
+        this.summarizationJobId = summarizationJobId;
+    }
+
+    public String getTaskExtractionJobId() {
+        return taskExtractionJobId;
+    }
+
+    public void setTaskExtractionJobId(String taskExtractionJobId) {
+        this.taskExtractionJobId = taskExtractionJobId;
+    }
+
 }

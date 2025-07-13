@@ -2,6 +2,7 @@ package com.joffredupreez.transcriptParser.service;
 
 import com.joffredupreez.transcriptParser.model.AppUser;
 import com.joffredupreez.transcriptParser.model.FileResult;
+import com.joffredupreez.transcriptParser.model.ProcessingStatus;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -64,6 +66,33 @@ public class FileStorageService {
         fileResult.setStatus(ProcessingStatus.UPLOADED);
 
         return fileResultService.save(fileResult);
+    }
+
+    public void validateFile(MultipartFile file) throws IllegalArgumentException {
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("File is empty");
+        }
+
+        // Check file size (e.g., max 500MB)
+        // TODO - might change max file size
+        if (file.getSize() > 500 * 1024 * 1024) {
+            throw new IllegalArgumentException("File too large");
+        }
+
+        // Check file type
+        String contentType = file.getContentType();
+        if (!isValidFileType(contentType)) {
+            throw new IllegalArgumentException("Invalid file type");
+        }
+    }
+
+    private boolean isValidFileType(String contentType) {
+        return contentType != null && (
+                contentType.startsWith("audio/") ||
+                        contentType.startsWith("video/") ||
+                        contentType.equals("text/plain") ||
+                        contentType.equals("application/pdf")
+        );
     }
 
     private String getFileExtension(String filename) {
