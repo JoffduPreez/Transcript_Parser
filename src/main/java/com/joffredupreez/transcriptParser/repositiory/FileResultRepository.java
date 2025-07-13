@@ -11,6 +11,15 @@ import java.util.Optional;
 
 @Repository
 public interface FileResultRepository extends JpaRepository<FileResult, Long> {
+    /*
+    For these methods, we pass in the whole AppUser object
+    When you use the AppUser object, JPA can:
+        Use the foreign key relationship directly (AppUser.id)
+        Leverage entity associations for efficient queries
+        Maintain referential integrity
+
+    */
+
     // Finds all files for a specific user, sorted by upload date (newest first)
     List<FileResult> findByUserOrderByUploadedAtDesc(AppUser user);
 

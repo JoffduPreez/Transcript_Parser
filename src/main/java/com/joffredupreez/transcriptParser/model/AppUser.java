@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 public class AppUser implements UserDetails {
-    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+    private static final Logger logger = LoggerFactory.getLogger(AppUser.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
