@@ -1,6 +1,7 @@
 package com.joffredupreez.transcriptParser.controller;
 
 import com.joffredupreez.transcriptParser.model.AppUser;
+import com.joffredupreez.transcriptParser.model.DTO;
 import com.joffredupreez.transcriptParser.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,33 +18,19 @@ public class UserController {
 
     @GetMapping("/profile")
     public ResponseEntity<?> getUserProfile(@AuthenticationPrincipal AppUser user) {
-        return ResponseEntity.ok(new ProfileResponse(user.getUsername(), user.getEmail()));
+        return ResponseEntity.ok(new DTO.ProfileResponse(user.getUsername(), user.getEmail()));
     }
 
     @PutMapping("/profile")
-    public ResponseEntity<?> updateUserProfile(@AuthenticationPrincipal AppUser user, @RequestBody UpdateProfileRequest updateRequest) {
+    public ResponseEntity<?> updateUserProfile(@AuthenticationPrincipal AppUser user, @RequestBody DTO.UpdateProfileRequest updateRequest) {
         user.setUsername(updateRequest.username);
         user.setEmail(updateRequest.email);
 
         if (userService.save(user) != null) {
-            return ResponseEntity.ok(new ProfileResponse(user.getUsername(), user.getEmail()));
+            return ResponseEntity.ok(new DTO.ProfileResponse(user.getUsername(), user.getEmail()));
         } else {
             return ResponseEntity.internalServerError().build();
         }
     }
 
-    public static class ProfileResponse {
-        public String username;
-        public String email;
-
-        public ProfileResponse(String username, String email) {
-            this.username = username;
-            this.email = email;
-        }
-    }
-
-    public static class UpdateProfileRequest {
-        public String username;
-        public String email;
-    }
 }

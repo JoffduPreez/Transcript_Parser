@@ -1,9 +1,12 @@
 package com.joffredupreez.transcriptParser.service;
 
+import com.joffredupreez.transcriptParser.controller.FileController;
 import com.joffredupreez.transcriptParser.model.AppUser;
 import com.joffredupreez.transcriptParser.model.FileResult;
 import com.joffredupreez.transcriptParser.model.ProcessingStatus;
 import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,7 @@ import java.util.UUID;
 @Service
 public class FileStorageService {
 
+    private static final Logger logger = LoggerFactory.getLogger(FileController.class);
     // :uploads - Default value if property doesn't exist
     @Value("${file.upload-dir:uploads}")
     private String uploadDir;
@@ -106,6 +110,7 @@ public class FileStorageService {
         if (contentType.startsWith("audio/")) return "audio";
         if (contentType.startsWith("video/")) return "video";
         if (contentType.equals("text/plain")) return "text";
+        if (contentType.equals("application/pdf")) return "pdf";
         return "unknown";
     }
 }

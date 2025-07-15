@@ -13,6 +13,12 @@ spring:
     show-sql: true        # Logs SQL queries to console
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+      enabled: true
+
 jwt:
   secret: Kss851y//zyue5xGLJPurU7/88wcuscLVCwZ2sdTZBINLpqE3AEVfq0xlwpPp5T+
 
@@ -27,3 +33,4 @@ logging:
 
 file:
   upload-dir: src/main/resources/static/uploads
+

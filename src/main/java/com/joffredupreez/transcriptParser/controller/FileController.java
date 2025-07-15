@@ -72,16 +72,13 @@ public class FileController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file, Authentication authentication) {
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file,  @AuthenticationPrincipal AppUser user) {
         try {
             // Validate file
             fileStorageService.validateFile(file);
 
-            // Get current user
-            String username = authentication.getName();
-
             // Save file and create FileResult
-            FileResult fileResult = fileStorageService.storeFile(file, username);
+            FileResult fileResult = fileStorageService.storeFile(file, user.getUsername());
 
             return ResponseEntity.ok(fileResult);
 
@@ -101,8 +98,4 @@ public class FileController {
                     .body(Map.of("error", "Unexpected error occurred"));
         }
     }
-
-
-
-
 }
